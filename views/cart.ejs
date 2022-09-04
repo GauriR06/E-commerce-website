@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar.ejs") %>
+    <section class="cart featured" >
+        <h4>- My Shopping Cart -</h4>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Product Image</td>
+                    <td>Product Summary</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                
+                </tr>
+            </thead>
+            <tbody>
+
+                <% if(products.length > 0){  %>
+                    <% products.forEach(product => {  %>
+                        <tr >
+                            
+                            <td>
+                                <form action="/deleteCartItem" method="POST">
+                                    <input type="hidden" name="prodID" value="<%= product._id %>">
+                                    <button type="submit"><i class="fa">&#xf014;</i></button>
+                                </form>
+                            </td>
+                            <td><img src="<%= product.prod_mainImg %>"></td>
+                            <td class="summary" data-qty="<%= product.prod_quantity %>" data-price="<%= product.prod_price %>">
+                                <%= product.prod_name %> <br><br>
+
+                                Size: <%= product.prod_size %><br>
+                                ID: <%= product.prod_id %><br>
+                            </td>
+                            <td>AED <%= product.prod_price %></td>
+                            <td><%= product.prod_quantity %></td>
+                        </tr>
+                    <% }) %> 
+                <% } %>    
+            </tbody>
+        </table>
+
+    </section>
+
+
+
+    <section class="checkOut featured">
+        <div id="coupon">
+            <h4>Apply Discount Coupon</h4>
+            <div>
+                <input type="text" placeholder="Enter coupon code" id="discountCoupon">
+                <button id="dis_btn"  class="button">Apply</button>
+            </div>
+        </div>
+
+        <div id="total">
+            <h4>Cart Total</h4>
+            <table>
+                <tr>
+                    <td>Cart Subtotal</td>
+                    <td id="cartSubtotal"><%= subtotal %></td>
+                </tr>
+                <tr>
+                    <td>Discount Amount</td>
+                    <td id="discount"></td>
+                </tr>
+                <tr>
+                    <td>Shipping Cost/Delivery Charge</td>
+                    <td id="shipCost"></td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong id="final_total"></strong></td>
+                </tr>
+            </table>
+
+            <button class="button" id="checkout" > Proceed to Checkout</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <%- include("../partials/footer.ejs") %>
+
+    <script>
+        'use strict';
+        
+        //before adding discount
+
+        let cart_subtotal_obj = document.getElementById("cartSubtotal")
+        let cart_Subtotal = Number(cart_subtotal_obj.textContent);
+        let shippingCost = 10
+        let discount_amt = 0
+        let cart_Total;
+        if(cart_Subtotal === 0){
+            cart_Total = 0
+            shippingCost = 0
+        } else{
+            shippingCost = 10
+            cart_Total = cart_Subtotal + shippingCost; 
+        }
+               
+        
+
+        
+        let cart_discount_amt = document.getElementById("discount")
+        let cart_ship_cost = document.getElementById("shipCost")
+        let cart_final_total = document.getElementById("final_total")
+
+        cart_discount_amt.innerHTML = `AED ${discount_amt}`
+        cart_ship_cost.innerHTML = `AED ${shippingCost}`
+        cart_final_total.innerHTML = `AED ${cart_Total}`
+
+
+        //after adding discount
+        let discountButton = document.getElementById("dis_btn")
+        discountButton.addEventListener("click", (e)=>{
+            let discountCouponObj = document.getElementById("discountCoupon")
+            if(!discountCouponObj){
+                discount_amt = 0
+            }
+            else if(discountCouponObj.value == "LILAC10" || discountCouponObj.value == "lilac10"){
+                discount_amt = (cart_Subtotal * 0.1).toFixed(2)
+                
+            }
+            else if(discountCouponObj.value == "LILAC30" || discountCouponObj.value == "lilac30"){
+                discount_amt = (cart_Subtotal * 0.3).toFixed(2)
+                
+            }
+            else if(discountCouponObj.value == "LILAC50" || discountCouponObj.value == "lilac50"){
+                discount_amt = (cart_Subtotal * 0.5).toFixed(2)
+                
+            }
+            else{
+                discount_amt = 0
+            }
+
+            // alert(discount_amt)
+            cart_Total = cart_Subtotal - discount_amt + shippingCost
+
+            cart_discount_amt.innerHTML = `AED ${discount_amt}`
+            cart_final_total.innerHTML = `AED ${cart_Total}`
+        })
+
+
+
+        //Onclicking Proceed to payment button
+        const checkout_btn = document.querySelector('#checkout');  
+
+        checkout_btn.addEventListener('click', (e)=>{
+            cart_Total *=100
+            const item = { items: [{
+                subtotal: cart_Subtotal,
+                total: cart_Total,
+                discount: discount_amt,
+                shipping: shippingCost
+                }]
+            }
+
+            
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type':
+                        'application/json;charset=utf-8'
+                },
+                // body: JSON.stringify(item)
+                body: JSON.stringify(item)
+            }    
+            const endpoint = `/payment_page`;
+            fetch(endpoint, options).then(response => response.json())
+            .then(({ url }) => {window.location = url})
+            .catch(err => console.log(err));
+            
+        })
+
+
+
+    </script>
+       
+
+</body>
+</html>

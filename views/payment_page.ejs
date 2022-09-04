@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar.ejs") %>
+    <div class="Acc_success">
+        <h3>PAYMENT SUCCESSFULL!</h3>
+        <br>
+        <h4>Your order will be delivered to the below address <br> in the next 
+            <strong>3-4 working days</strong> between <strong>9am to 5pm</strong>.</h4>
+
+        
+        <div class="paymentDiv">
+            <p>Your delivery address:</p>
+            <h5 class="address"><%= address %></h5>
+        </div>
+
+        <div class="paymentDiv">
+            <p>Your Cart Items:</p>
+            <% if(cartItems.length > 0){  %>
+                <% cartItems.forEach(cartItem => {  %>
+                    <h5 class="address">
+                        Product Name: <%= cartItem.prod_name %> <br>
+                        Product ID: <%= cartItem.prod_id %><br>
+                        Size: <%= cartItem.prod_size %><br>
+                        Quantity: <%= cartItem.prod_quantity %> <br><br>
+                    </h5>
+                <% }) %> 
+            <% } %>
+        </div>
+
+        <div class="paymentDiv">
+            <p>Date and Time of purchase:</p>
+            <h5 id="purchaseDate" class="address"></h5>
+        </div>
+
+    </div>
+
+    
+    <script>
+        var date = new Date();
+	    document.getElementById("purchaseDate").innerHTML = date;
+    </script>
+</body>
+</html>

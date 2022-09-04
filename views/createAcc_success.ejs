@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- HEADER -->
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar_signIn.ejs") %>
+    
+
+    <div class="Acc_success">
+        <h3>Welcome to the LILAC family, <%= FN %>!!</h3>
+        <!-- <h4>Your Account is Successfully Created </h4> -->
+        <div>
+            <h4>Your Account is Successfully Created </h4>
+            <p>Your account username and password - </p>
+            <h5>Username: <%= U %> </h5>
+            <h5>Password: <%= P %> </h5>
+
+        </div>
+        
+        <br><br>
+
+        <span><a href="/signIn" class="link">CLICK HERE to Sign In to Shop Online!</a></span>
+
+    </div>
+
+
+    
+</body>
+</html>

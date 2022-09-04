@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- HEADER -->
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar_signIn.ejs") %>
+
+    <h2 class="heading">Create Account</h2>
+    <div class="signIn-acc content">
+        <form action="/createAcc_success" method="POST"> 
+            <label for="first_name">Enter your first name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Enter your last name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+
+            <label for="phoneNo">Enter your phone number:</label>
+            <input type="number" id="phoneNo" name="phoneNo" required>
+
+            <label for="email">Enter your email address:</label>
+            <input type="text" id="email" name="email" required>
+
+            <label for="delivery_addr">Enter your delivery address:</label>
+            <textarea id="delivery_addr" name="delivery_addr" required></textarea>
+
+            <label for="username">Enter username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Enter password:</label>
+            <input type="password" id="password" name="password" required>
+            
+
+            <button class="button" type="submit">SUBMIT</button>
+        </form>
+    </div>
+
+
+
+</body>
+</html>

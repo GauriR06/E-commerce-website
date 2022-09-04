@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- HEADER -->
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar.ejs") %>
+
+    <!-- MAIN PIC -->
+    <section class="main_pic">
+        <div class="main_pic_content">
+            <h2>Super deals </h2>
+            <h1>On all our products!</h1>
+            <p>Save more with coupons and get upto 50% off </p>
+            <button><a href="#directlink">Shop now!</a></button>
+        </div>
+    </section>
+
+    <!-- OFFER CODE PIC -->
+    <section class="offer_pic">
+        <div class="offer_pic_content">
+            <h2>The more you shop, the better the savings </h2>
+            <h1>Get AED 150 FREE</h1>
+            <h1>on shopping of AED 300</h1>            
+            <h6>T&amp;Cs apply </h6>
+            <button onclick="window.location.href='/t&c'">Read more</button>
+            <span id="directlink"></span>
+            <p>Offer valid on your next purchase</p>
+        </div>
+    </section>
+    
+    <!-- FEATURED PRODUCTS -->
+    <section class="featured">
+        <h2>Featured products</h2>
+        <p>New arrivals in the summer collection</p>
+        <br><br><br>
+        <div class="product_container">   
+            
+            <% if(products.length > 0){  %>
+                <% products.forEach(product => {  %>
+                    <div class="prod" onclick="window.location.href='/home/<%= product._id %>'">
+                        <img src="<%= product.main_img %>">
+                        <div class="prod_desc">
+                            <span>DIVIDED | <%= product.category %></span>
+                            <h5><%= product.prod_name %></h5>
+                            <h4><%= product.price %></h4>
+                            <i class="fa">&#9884;</i>
+                        </div>
+                    </div>
+                <% }) %> 
+            <% } %>
+    
+        </div>
+    
+    </section>
+
+    <!-- FOOTER -->
+    <%- include("../partials/footer.ejs") %>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar.ejs") %>
+    
+    <!-- FEATURED PRODUCTS -->
+    <section class="featured">
+        <h2>GIRLS 10-14Y</h2>
+        <p>New arrivals in collection</p>
+        <br><br><br>
+        <div class="product_container">    
+            
+            <% if(products.length > 0){  %>
+                <% products.forEach(product => {  %>
+                    <div class="prod" onclick="window.location.href='/big_girls/<%= product._id %>'">
+                        <img src="<%= product.main_img %>">
+                        <div class="prod_desc">
+                            <span>DIVIDED | <%= product.category %></span>
+                            <h5><%= product.prod_name %></h5>
+                            <h4><%= product.price %></h4>
+                            <i class="fa">&#9884;</i>
+                        </div>
+                    </div>
+                <% }) %> 
+            <% } %>
+    
+        </div>
+    
+    </section>
+        
+    <!-- FOOTER -->
+    <%- include("../partials/footer.ejs") %>
+</body>
+</html>

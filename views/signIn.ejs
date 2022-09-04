@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- HEADER -->
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar_signIn.ejs") %>
+
+    <h2 class="heading">Sign In</h2>
+    <div class="signIn-acc content">
+        <form action="/signIn_success" method="POST"> <!-- action="/accounts" method="GET" -->
+
+            <label for="username">Enter username:</label>
+            <input type="text" id="username" name="username">
+
+            <label for="password">Enter password:</label>
+            <input type="password" id="password" name="password">
+            <!-- <textarea id="password" name="password"></textarea> -->
+
+            <button class="button" type="submit" class="btn_login">SUBMIT</button>
+        </form>
+    </div>
+
+    <p class="createAcc-link"><a class="link"  href="/createAcc">Don't have an account? Create one!</a></p>
+
+
+    
+</body>
+</html>

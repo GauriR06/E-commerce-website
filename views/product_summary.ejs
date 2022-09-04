@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/header.ejs") %>
+</head>
+<body>
+    <!-- NAV BAR -->
+    <%- include("../partials/nav_bar.ejs") %>
+    
+    <section class="single_product">
+        <div class="pro_img">
+            <img src="<%= product.main_img %>" width="100%" id="mainImg">
+            
+            <div class="small_img_group">
+                
+                <div class="small_img_col">
+                    <img src="<%= product.img1 %>" width="100%" class="smallImg">
+                </div>
+
+                
+                <div class="small_img_col">
+                    <img src="<%= product.img2 %>" width="100%" class="smallImg">
+                </div>
+
+               
+                <div class="small_img_col">
+                    <img src="<%= product.img3 %>" width="100%" class="smallImg">
+                </div>
+
+                <div class="small_img_col">
+                    <img src="<%= product.img4 %>" width="100%" class="smallImg">
+                </div>
+            </div>
+        </div>
+
+        <div class="single_pro_details">
+            <h5>DIVIDED | <%= product.category %></h5>
+            <h4><%= product.prod_name %></h4>
+            <h2>AED <%= product.price %></h2>
+            <br>
+            <div id="prod_sizes">
+                <ul>
+                    <li><a href="#" class="option" id="XS">XS</a></li>
+                    <li><a href="#" class="option" id="S">S</a></li>
+                    <li><a href="#" class="option" id="M">M</a></li>
+                    <li><a href="#" class="option" id="L">L</a></li>
+                    <li><a href="#" class="option" id="XL">XL</a></li>
+                    <li><a href="#" class="option" id="XXL">XXL</a></li>
+                </ul>
+            </div>
+            <br>    
+            <span>Selected size: </span>
+            <span id="selected_size"></span>
+            <br><br>
+            
+            <label for="quantity">Quantity: </label>
+            <input type="number" id="quantity" min="1" max="5" value="1">
+            <br>
+            <a class="button" id="addToCart" data-id="<%= product._id %>" data-name="<%= product.prod_name %>" data-price="<%= product.price %>" data-img="<%= product.main_img %>" href="/addItemContent">Add to Cart</a>
+            <br><br>
+            <h4>Product Details</h4>
+            <span><%= product.prod_desc %></span>
+        </div>
+
+    </section>
+    
+    
+    <!-- FOOTER -->
+    <%- include("../partials/footer.ejs") %>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+        // console.log("Hello0")
+        var Main_img = document.getElementById("mainImg")
+        var Small_img = document.getElementsByClassName("smallImg")
+
+        Small_img[0].onclick = function(){
+            Main_img.src = Small_img[0].src;
+        }
+
+        Small_img[1].onclick = function(){
+            Main_img.src = Small_img[1].src;
+        }
+
+        Small_img[2].onclick = function(){
+            Main_img.src = Small_img[2].src;
+        }
+
+        Small_img[3].onclick = function(){
+            Main_img.src = Small_img[3].src;
+        }
+
+        var size = document.getElementById("selected_size")
+        size.innerHTML = "XS"
+
+
+        $(document).ready(function () {
+            $('.option').click(function () {
+
+                $('.option').addClass('in-active');       // ADD CLASS TO ALL THE TAGS.
+
+                if ($(this).hasClass('in-active')) {    // CHECK IF THE TAG HAS 'in-active' CLASS.
+
+                    $(this)
+                        .removeClass('in-active')
+                        .addClass('selected');
+                    
+                    $("#selected_size").text($(this).attr('id'));
+                }
+            })
+        });
+
+    
+
+        const add_Item = document.querySelector('#addToCart');  
+
+
+        add_Item.addEventListener('click', (e)=>{
+            const item_obj_size = document.querySelector('#selected_size').textContent;
+            const item_obj_qty = document.querySelector('#quantity').value;
+            const item_obj_no = add_Item.dataset.id;
+            const item_obj_name = add_Item.dataset.name;
+            const item_obj_price = add_Item.dataset.price;
+            const item_obj_img = add_Item.dataset.img;
+            
+            const item = {
+                prod_id: item_obj_no,
+                prod_name: item_obj_name,
+                prod_price: item_obj_price,
+                prod_size: item_obj_size,
+                prod_quantity: item_obj_qty,
+                prod_mainImg: item_obj_img,      
+            }
+
+            
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type':
+                        'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(item)
+            }    
+            const endpoint = `/cart`;
+            fetch(endpoint, options).then(response => response.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+            
+        })
+    </script>
+
+</body>
+</html>
