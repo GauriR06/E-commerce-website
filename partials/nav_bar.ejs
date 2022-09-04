@@ -1,0 +1,47 @@
+<!-- NAV BAR -->
+<nav>
+    <div>
+        <h1> <span class="brand_logo">&#9884;</span> LILAC </h1>
+    </div>
+    
+    <ul id="navbar">
+        <a id="close" href="#" ><i class="fa fas">&#xf00d;</i></i></a>
+        <li><a href="/home" class="tag">Home</a></li>
+        <li><a href="/mens" class="tag">Men</a></li>
+        <li><a href="/womens" class="tag">Women</a></li>
+        <li><a href="/kids" class="tag">Kids</a></li>
+        <li><a href="/signOut" class="tag" id="SignedOut">Sign Out</a></li>
+        <!-- <i class="fas fa-hamburger"></i> -->
+        <!-- <li><a href="/cart"><i style="font-size:40px" class="fa">&#xf07a;</i></a></li> -->
+        <li><a href="/cart"><i style="font-size:35px" class="fas fa-shopping-cart"></i></a></li>
+        
+        
+        
+    </ul>
+
+    <div id="mobile">
+        <a id="bar" href="#"><i  class=" fas fa-regular fa-bars"></i></a>
+        <!-- <i id="bar" class=" fas fa-regular fa-bars"></i> -->
+    </div>
+</nav>
+
+
+<script>
+    const bar = document.getElementById("bar")
+    const close = document.getElementById("close")
+    const navbar = document.getElementById("navbar")
+    if(bar){
+        bar.addEventListener('click', () => {
+            navbar.classList.add('active')
+        })
+    }
+
+    if(close){
+        close.addEventListener('click', () => {
+            navbar.classList.remove('active')
+        })
+    }
+        
+</script>
+
+
